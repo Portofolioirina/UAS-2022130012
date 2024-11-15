@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BioskopController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ShowtimeController;
+use App\Models\Showtime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +27,6 @@ Auth::routes();
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/movie', MovieController::class);
 Route::resource('/bioskop', BioskopController::class);
+Route::resource('showtime', ShowtimeController::class);
+
 

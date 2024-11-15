@@ -31,4 +31,8 @@ class Movie extends Model
 
         return $poster ? Storage::url($poster) : null;
     }
+
+    public function showtime(){
+        return $this->hasMany(Showtime::class);
+    }
 }
