@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BioskopController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SeatController;
 use App\Http\Controllers\ShowtimeController;
 use App\Models\Showtime;
 use Illuminate\Support\Facades\Auth;
@@ -28,5 +29,6 @@ Auth::routes();
 Route::resource('/movie', MovieController::class);
 Route::resource('/bioskop', BioskopController::class);
 Route::resource('showtime', ShowtimeController::class);
+Route::resource('seat', SeatController::class);
 
 

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Tambah Showtime Baru</h1>
+    <h1 class="my-4">Create New Showtime</h1>
     <form action="{{ route('showtime.store') }}" method="POST">
         @csrf
         <div class="form-group">
@@ -29,7 +29,7 @@
             <input type="datetime-local" name="end_time" id="end_time" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
 </div>
 @endsection

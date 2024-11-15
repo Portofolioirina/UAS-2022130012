@@ -60,7 +60,8 @@ class ShowtimeController extends Controller
      */
     public function edit(Showtime $showtime)
     {
-        return view('showtimes.edit', compact('showtime'));
+        $movies = Movie::all();
+        return view('showtimes.edit', compact('showtime', 'movies'));
     }
 
     /**
