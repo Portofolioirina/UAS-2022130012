@@ -14,4 +14,9 @@ class Bioskop extends Model
         'kota',
         'jenis',
     ];
+
+    public function showtimes()
+    {
+        return $this->hasMany(Showtime::class);
+    }
 }

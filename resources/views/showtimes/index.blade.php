@@ -12,6 +12,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">Bioskop</th>
                 <th scope="col">Film</th>
                 <th scope="col">Layar</th>
                 <th scope="col">Mulai</th>
@@ -22,6 +23,7 @@
         <tbody>
             @foreach ($showtimes as $showtime)
                 <tr>
+                    <td>{{ $showtime->bioskop->nama }}</td>
                     <td>{{ $showtime->movie->judul }}</td>
                     <td>{{ $showtime->screen }}</td>
                     <td>{{ $showtime->start_time }}</td>

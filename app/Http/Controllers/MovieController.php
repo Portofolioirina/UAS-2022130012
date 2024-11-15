@@ -25,7 +25,7 @@ class MovieController extends Controller
     public function create()
     {
         $movies = Movie::all(); // Ambil semua film
-        return view('showtime.create', compact('movies'));
+        return view('movies.create', compact('movies'));
     }
 
     /**

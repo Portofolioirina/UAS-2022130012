@@ -30,7 +30,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('movie.index') }}">Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('bioskop.index') }}">Bioskop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('booking.index') }}">Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('seat.index') }}">Seat</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

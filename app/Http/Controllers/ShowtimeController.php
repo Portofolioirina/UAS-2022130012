@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bioskop;
 use App\Models\Movie;
 use App\Models\Showtime;
 use Illuminate\Http\Request;
@@ -27,8 +28,9 @@ class ShowtimeController extends Controller
      */
     public function create()
     {
+        $bioskops = Bioskop::all();
         $movies = Movie::all();
-        return view('showtimes.create', compact('movies'));
+        return view('showtimes.create', compact('movies', 'bioskops'));
     }
 
     /**
@@ -37,6 +39,7 @@ class ShowtimeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'bioskop_id' => 'required|exists:bioskops,id',
             'movie_id' => 'required|exists:movies,id',
             'screen' => 'required|string|max:50',
             'start_time' => 'required|date',
@@ -60,8 +63,9 @@ class ShowtimeController extends Controller
      */
     public function edit(Showtime $showtime)
     {
+        $bioskops = Bioskop::all();
         $movies = Movie::all();
-        return view('showtimes.edit', compact('showtime', 'movies'));
+        return view('showtimes.edit', compact('showtime', 'movies', 'bioskops'));
     }
 
     /**
@@ -70,6 +74,7 @@ class ShowtimeController extends Controller
     public function update(Request $request, Showtime $showtime)
     {
         $validated = $request->validate([
+            'bioskop_id' => 'required|exists:bioskops,id',
             'movie_id' => 'required|exists:movies,id',
             'screen' => 'required|string|max:50',
             'start_time' => 'required|date',

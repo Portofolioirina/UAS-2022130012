@@ -6,6 +6,15 @@
     <form action="{{ route('showtime.store') }}" method="POST">
         @csrf
         <div class="form-group">
+            <label for="bioskop_id">Bioskop</label>
+            <select name="bioskop_id" id="bioskop_id" class="form-control" required>
+                @foreach ($bioskops as $bioskop)
+                    <option value="{{ $bioskop->id }}">{{ $bioskop->nama }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="movie_id">Film</label>
             <select name="movie_id" id="movie_id" class="form-control" required>
                 @foreach ($movies as $movie)
