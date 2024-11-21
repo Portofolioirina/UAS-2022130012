@@ -54,7 +54,7 @@ class MovieController extends Controller
             'genre' => $validated['genre'],
             'durasi' => $validated['durasi'],
             'rating' => $validated['rating'],
-            'photo' => $validated['photo'] ?? null,
+            'poster' => $validated['poster'] ?? null,
            ]);
 
            return redirect()->route('movie.index')->with('success', 'Movie added successfully.');
@@ -96,7 +96,7 @@ class MovieController extends Controller
             $imagePath = $request->file('poster')->store('public');
 
             if ($movie->poster){
-                Storage::delete($movie->photo);
+                Storage::delete($movie->poster);
             }
 
             $validated['poster'] = $imagePath;
@@ -107,7 +107,7 @@ class MovieController extends Controller
             'genre' => $validated['genre'],
             'durasi' => $validated['durasi'],
             'rating' => $validated['rating'],
-            'photo' => $validated['photo'] ?? null,
+            'poster' => $validated['poster'] ?? null,
            ]);
 
            return redirect()->route('movie.index')->with('success', 'Movie update successfully.');

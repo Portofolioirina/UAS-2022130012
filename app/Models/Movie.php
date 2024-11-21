@@ -15,6 +15,7 @@ class Movie extends Model
         'durasi',
         'rating',
         'poster',
+        'is_now_showing',
     ];
 
     protected $append = [

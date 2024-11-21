@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mt-5">
     @if ($movie->poster)
-    <img src="{{ $movie->poster }}" class="rounded img-thumbnail mx-auto d-block my-3"/>
+    <img src="{{ $movie->poster ? Storage::url(ltrim($movie->poster, 'storage/')) : 'https://placehold.co/200' }}"/>
     @endif
     <table class="table table-bordered">
         <tbody>

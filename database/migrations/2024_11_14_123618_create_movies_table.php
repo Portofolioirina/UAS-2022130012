@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('durasi');
             $table->float('rating', 3, 1);
             $table->string('poster')->nullable();
+            $table->boolean('is_now_showing')->default(true);
             $table->timestamps();
         });
     }
@@ -27,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movies');
+        Schema::table('movies', function (Blueprint $table) {
+            $table->dropColumn('is_now_showing');
+        });
     }
 };

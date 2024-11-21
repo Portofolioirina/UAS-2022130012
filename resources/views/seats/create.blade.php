@@ -8,10 +8,22 @@
         <div class="form-group">
             <label for="showtime_id">Showtimes</label>
             <select name="showtime_id" id="showtime_id" class="form-control" required>
-                @foreach ($showtimes as $showtime)
-                    <option value="{{ $showtime->id }}">{{ $showtime->movie->judul }} - {{ $showtime->screen }} ({{ $showtime->start_time }}</option>
-                @endforeach
+                <option value="" disabled selected>Pilih Showtime</option> <!-- Placeholder option -->
+
+                @if($showtimes->isEmpty())
+                    <option value="" disabled>Tidak ada showtime tersedia</option>
+                @else
+                    @foreach ($showtimes as $showtime)
+                        <option value="{{ $showtime->id }}">
+                            {{ $showtime->movie->judul }} - {{ $showtime->screen }} {{ $showtime->start_time }}
+                        </option>
+                    @endforeach
+                @endif
             </select>
+
+            @if ($errors->has('showtime_id'))
+                <span class="text-danger">{{ $errors->first('showtime_id') }}</span>
+            @endif
         </div>
 
         <div class="form-group">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BioskopController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SeatController;
@@ -23,13 +24,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Rute untuk menampilkan halaman film yang sedang tayang
+Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
+
+// Menampilkan detail film
+Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
+
+// Rute untuk resource controller
 Route::resource('/movie', MovieController::class);
 Route::resource('/bioskop', BioskopController::class);
 Route::resource('showtime', ShowtimeController::class);
