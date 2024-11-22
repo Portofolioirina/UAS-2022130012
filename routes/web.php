@@ -42,5 +42,8 @@ Route::resource('showtime', ShowtimeController::class);
 Route::resource('seat', SeatController::class);
 Route::resource('booking', BookingController::class);
 Route::resource('payment', PaymentController::class);
+Route::post('booking/store', [BookingController::class, 'store'])->name('booking.store');
+Route::get('payment/{bookingId}', [BookingController::class, 'payment'])->name('payment');
+Route::post('payment/process/{bookingId}', [BookingController::class, 'processPayment'])->name('payment.process');
 
 

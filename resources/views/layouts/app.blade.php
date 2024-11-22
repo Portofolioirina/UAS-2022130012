@@ -40,6 +40,9 @@
                             <a class="nav-link" href="{{ route('bioskop.index') }}">Bioskop</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('showtime.index') }}">Showtime</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('booking.index') }}">Bookings</a>
                         </li>
                         <li class="nav-item">

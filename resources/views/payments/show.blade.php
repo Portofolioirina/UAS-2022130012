@@ -1,13 +1,31 @@
-@extends('layouts.app')
+@extends('payments.layout')
 
 @section('content')
-    <h1>Detail Pembayaran</h1>
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2> Lihat Payment </h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('payments.index') }}">Kembali</a>
+            </div>
+        </div>
+    </div>
 
-    <p>ID Pembayaran: {{ $payment->id }}</p>
-    <p>Tanggal Pembayaran: {{ $payment->payment_date }}</p>
-    <p>Jumlah: {{ $payment->amount }}</p>
-    <p>Metode Pembayaran: {{ $payment->payment_method }}</p>
-    <p>Status Pembayaran: {{ $payment->payment_status }}</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong> Tunai </strong>
+                {{ $payment->tunai }}
+            </div>
+        </div>
 
-    <a href="{{ route('bookings.index') }}">Kembali ke Daftar Booking</a>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong> Non Tunai </strong>
+                {{ $payment->non_tunai }}
+            </div>
+        </div>
+
+    </div>
 @endsection

@@ -2,61 +2,69 @@
 
 @section('content')
 <div class="container">
-    <h1>Buat Pemesanan Baru</h1>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+    <h1 class="my-4">Booking Tiket Movie</h1>
     <form action="{{ route('booking.store') }}" method="POST">
         @csrf
 
         <div class="form-group">
-            <label for="seat_id">Pilih Kursi</label>
-            <select name="seat_id" id="seat_id" class="form-control" required>
-                <option value="">-- Pilih Kursi --</option>
-                @foreach ($seats as $seat)
-                    <option value="{{ $seat->id }}">{{ $seat->seat_number }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="showtime_id">Pilih Jadwal Tayangan</label>
+            <label for="showtime_id">Showtime</label>
             <select name="showtime_id" id="showtime_id" class="form-control" required>
-                <option value="">-- Pilih Jadwal --</option>
+                <option value="" disabled selected>Pilih Showtime</option>
                 @foreach ($showtimes as $showtime)
-                    <option value="{{ $showtime->id }}">{{ $showtime->movie->title }} - {{ $showtime->start_time }}</option>
+                    <option value="{{ $showtime->id }}">
+                        {{ $showtime->movie->judul }} - {{ $showtime->screen }}
+                        ({{ $showtime->start_time }})
+                    </option>
                 @endforeach
             </select>
+            @if ($errors->has('showtime_id'))
+                <span class="text-danger">{{ $errors->first('showtime_id') }}</span>
+            @endif
         </div>
 
         <div class="form-group">
-            <label for="total_price">Harga</label>
-            <input type="number" name="total_price" id="total_price" class="form-control" value="50000" readonly>
+            <label for="seat_id">Seat</label>
+            <select name="seat_id" id="seat_id" class="form-control" required>
+                <option value="" disabled selected>Pilih Seat</option>
+                @foreach ($seats as $seat)
+                    <option value="{{ $seat->id }}">
+                        Seat {{ $seat->seat_number }} ({{ $seat->status }})
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('seat_id'))
+                <span class="text-danger">{{ $errors->first('seat_id') }}</span>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <label for="total_price">Total Price</label>
+            <input type="text" name="total_price" id="total_price" class="form-control" required>
+            @if ($errors->has('total_price'))
+                <span class="text-danger">{{ $errors->first('total_price') }}</span>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <label for="booking_date">Booking Date</label>
+            <input type="date" name="booking_date" id="booking_date" class="form-control" required>
+            @if ($errors->has('booking_date'))
+                <span class="text-danger">{{ $errors->first('booking_date') }}</span>
+            @endif
         </div>
 
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" id="status" class="form-control" required>
-                <option value="Pending">Pending</option>
-                <option value="Confirmed">Confirmed</option>
+                <option value="Available" selected>Available</option>
+                <option value="Booked">Booked</option>
             </select>
+            @if ($errors->has('status'))
+                <span class="text-danger">{{ $errors->first('status') }}</span>
+            @endif
         </div>
 
-        <div class="form-group">
-            <label for="booking_date">Tanggal Pemesanan</label>
-            <input type="date" name="booking_date" id="booking_date" class="form-control" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Buat Pemesanan</button>
-        <a href="{{ route('booking.index') }}" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary mt-3">Book Ticket</button>
     </form>
 </div>
 @endsection

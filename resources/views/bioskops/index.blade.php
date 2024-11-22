@@ -1,20 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Movie List')
+@section('title', 'Bioskop List')
+
 @section('content')
-<div class="mt-4 p-5 bg-black text-white rounded">
-    <h1>All Bioskop</h1>
+<div class="container">
+    <h1 class="my-4">Daftar Bioskop</h1>
+    <a href="{{ route('bioskop.create') }}" class="btn btn-primary mb-3">Create New Bioskop</a>
 
-    <a href="{{ route('bioskop.create') }}" class="btn btn-primary btn-sm">Create New Bioskop</a>
-</div>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-@if (session()->has('success'))
-    <div class="alert alert-success mt-4">
-        {{ session()->get('success') }}
-    </div>
-@endif
-
-<div class="container mt-5">
     <table class="table table-bordered mb-5">
         <thead>
             <tr>
@@ -40,8 +36,8 @@
                 <td>{{ $bioskop->alamat }}</td>
                 <td>{{ $bioskop->kota }}</td>
                 <td>{{ $bioskop->jenis }}</td>
-                <td>{{ $bioskop->created_at }}</td>
-                <td>{{ $bioskop->updated_at }}</td>
+                <td>{{ $bioskop->created_at->format('d M Y H:i') }}</td>
+                <td>{{ $bioskop->updated_at->format('d M Y H:i') }}</td>
                 <td>
                     <a href="{{ route('bioskop.edit', $bioskop) }}" class="btn btn-primary btn-sm">
                         Edit
@@ -58,7 +54,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="7">No bioskop found.</td>
+                <td colspan="8" class="text-center">No bioskops found.</td>
             </tr>
             @endforelse
         </tbody>
