@@ -26,7 +26,7 @@
 
 <!-- Film yang Sedang Tayang -->
 <div class="container mt-5">
-    <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; font-weight: 600; color: #333;">Film yang Sedang Tayang</h2>
+    <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; font-weight: 600; color: #1f1a85;">Film yang Sedang Tayang</h2>
     <div class="row">
         @foreach($movies as $movie)
         <div class="col-md-4 mb-4">
@@ -38,6 +38,7 @@
                     <p class="card-text text-muted" style="font-size: 0.9rem;">Durasi: {{ $movie->durasi }} menit</p>
                     <p class="card-text text-muted" style="font-size: 0.9rem;">Rating: {{ $movie->rating }}</p>
                     <a href="{{ route('movies.show', $movie->id) }}" class="btn btn-primary w-100 mb-2" style="font-weight: bold; background-color: #007bff; border-color: #007bff;">Lihat Detail</a>
+                    <a href="{{ route('bookings.create', ['movie_id' => $movie->id]) }}" class="btn btn-primary w-100 mb-2" style="font-weight: bold; background-color: #007bff; border-color: #007bff;">Beli Tiket</a>
                     <a href="{{ $movie->trailer_url }}" class="btn btn-secondary w-100" target="_blank" style="font-weight: bold;">Tonton Trailer</a>
                 </div>
             </div>
@@ -55,16 +56,21 @@
 
 @section('styles')
     <style>
+        /* Styling the carousel image size */
         .carousel-item img {
             object-fit: cover;
-            height: 500px;
+            height: 350px;
         }
+
+        /* Hover effect on cards */
         .card:hover {
             transform: scale(1.05);
         }
+
         .card-img-top:hover {
             transform: scale(1.1);
         }
+
         .text-shadow {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }

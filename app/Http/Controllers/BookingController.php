@@ -47,7 +47,6 @@ class BookingController extends Controller
         $booking->showtime_id = $request->showtime_id;
         $booking->total_price = $request->total_price;
         $booking->booking_date = $request->booking_date; // Menggunakan booking_date dari input
-        $booking->status = $request->status;
         $booking->save();
 
         // Update status kursi menjadi 'Booked'
@@ -55,7 +54,7 @@ class BookingController extends Controller
         $seat->status = 'Booked';
         $seat->save();
 
-        return redirect()->route('payment', ['bookingId' => $booking->id]);
+        return redirect()->route('payment.view', ['booking' => $booking->id])->with('success', 'Booking successful, please proceed with payment.');
     }
 
     public function payment($bookingId)
@@ -79,7 +78,6 @@ class BookingController extends Controller
             'seat_id' => 'required|exists:seats,id',
             'showtime_id' => 'required|exists:showtimes,id',
             'total_price' => 'required|numeric',
-            'status' => 'required|string',
             'booking_date' => 'required|date', // Validasi untuk booking_date
         ]);
 
@@ -93,7 +91,6 @@ class BookingController extends Controller
         $booking->showtime_id = $request->showtime_id;
         $booking->total_price = $request->total_price;
         $booking->booking_date = $request->booking_date;
-        $booking->status = $request->status;
         $booking->save();
 
         // Update status kursi jika kursi yang dipilih berbeda

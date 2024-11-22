@@ -14,6 +14,7 @@ class Movie extends Model
         'genre',
         'durasi',
         'rating',
+        'trailer_url',
         'poster',
         'is_now_showing',
     ];

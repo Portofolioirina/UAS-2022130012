@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('rating', 3, 1);
             $table->string('poster')->nullable();
             $table->boolean('is_now_showing')->default(true);
+            $table->string('trailer_url')->nullable();
             $table->timestamps();
         });
     }

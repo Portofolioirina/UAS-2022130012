@@ -14,7 +14,6 @@ class Booking extends Model
         'showtime_id',
         'total_price',
         'booking_date',
-        'status',
     ];
 
     public function seat()

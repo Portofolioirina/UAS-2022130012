@@ -29,6 +29,11 @@
         </div>
 
         <div class="form-group mb-3">
+            <label for="trailer_url" class="form-label">Link Trailer</label>
+            <input type="url" name="trailer_url" class="form-control form-control-lg border-primary" id="trailer_url"  placeholder="https://www.youtube.com/watch?v=xxxxx">
+        </div>
+
+        <div class="form-group mb-3">
             <label for="poster" class="font-weight-bold">Poster</label>
             <input type="file" class="form-control form-control-lg border-primary" id="poster" name="poster" required>
         </div>

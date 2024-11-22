@@ -19,7 +19,6 @@
                 <th scope="col">Jadwal Tayangan</th>
                 <th scope="col">Total Harga</th>
                 <th scope="col">Tanggal Pemesanan</th>
-                <th scope="col">Status</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -31,7 +30,6 @@
                 <td>{{ $booking->showtime->movie->judul }} - {{ $booking->showtime->start_time }}</td>
                 <td>{{ $booking->total_price }}</td>
                 <td>{{ $booking->booking_date }}</td>
-                <td>{{ $booking->status }}</td>
                 <td>
                     <a href="{{ route('booking.edit', $booking->id) }}" class="btn btn-primary btn-sm">
                         Edit

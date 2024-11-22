@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('showtime_id')->constrained('showtimes')->onDelete('cascade'); // Mengaitkan dengan tabel showtimes
             $table->decimal('total_price', 10, 2);
             $table->dateTime('booking_date');
-            $table->string('status', 50);
             $table->timestamps();
         });
     }

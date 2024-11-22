@@ -16,12 +16,74 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- Font Awesome (untuk ikon) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        /* Navbar Custom Styles */
+        .navbar {
+            background: linear-gradient(45deg, #007bff, #0056b3); /* Gradasi warna navbar */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan pada navbar */
+        }
+
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white !important; /* Warna teks putih */
+            font-weight: 600; /* Memberikan ketebalan font */
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #ffc107 !important; /* Mengubah warna teks saat hover */
+            background-color: rgba(255, 193, 7, 0.2); /* Efek hover dengan latar belakang cerah */
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-item .nav-link.active {
+            font-weight: bold;
+            color: #ffc107 !important; /* Warna teks aktif */
+        }
+
+        .navbar-toggler {
+            border-color: #ffc107; /* Mengubah warna border tombol burger */
+        }
+
+        .navbar-toggler-icon {
+            background-color: #ffc107; /* Mengubah warna ikon burger */
+        }
+
+        .dropdown-menu {
+            background-color: #0056b3;
+        }
+
+        .dropdown-item {
+            color: white !important; /* Warna teks dropdown */
+        }
+
+        .dropdown-item:hover {
+            color: #007bff !important; /* Warna teks saat hover */
+            background-color: #ffc107 !important; /* Background saat hover */
+        }
+
+        /* Menambahkan animasi saat hover pada navbar item */
+        .navbar-nav .nav-item {
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile View Custom */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -34,19 +96,29 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('movie.index') }}">Movies</a>
+                            <a class="nav-link" href="{{ route('movie.index') }}">
+                                <i class="fas fa-film"></i> Movies
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('bioskop.index') }}">Bioskop</a>
+                            <a class="nav-link" href="{{ route('bioskop.index') }}">
+                                <i class="fas fa-theater-masks"></i> Bioskop
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('showtime.index') }}">Showtime</a>
+                            <a class="nav-link" href="{{ route('showtime.index') }}">
+                                <i class="fas fa-clock"></i> Showtime
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('booking.index') }}">Bookings</a>
+                            <a class="nav-link" href="{{ route('booking.index') }}">
+                                <i class="fas fa-ticket-alt"></i> Bookings
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('seat.index') }}">Seat</a>
+                            <a class="nav-link" href="{{ route('seat.index') }}">
+                                <i class="fas fa-chair"></i> Seat
+                            </a>
                         </li>
                     </ul>
 

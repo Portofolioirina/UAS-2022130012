@@ -19,6 +19,7 @@
                 <th scope="col">Genre</th>
                 <th scope="col">Durasi</th>
                 <th scope="col">Rating</th>
+                <th scope="col">Trailer</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Updated At</th>
                 <th scope="col">Aksi</th>
@@ -28,10 +29,21 @@
             @forelse ($movies as $movie)
                 <tr>
                     <th scope="row">{{ $movie->id }}</th>
-                    <td>{{ $movie->judul }}</td>
+                    <td>
+                        <a href="{{ route('movie.show', $movie) }}">
+                            {{ $movie->judul }}
+                        </a>
+                    </td>
                     <td>{{ $movie->genre }}</td>
                     <td>{{ $movie->durasi }} menit</td>
                     <td>{{ $movie->rating }}</td>
+                    <td>
+                        @if($movie->trailer_url)
+                            <a href="{{ $movie->trailer_url }}" target="_blank" class="btn btn-secondary">Tonton Trailer</a>
+                        @else
+                            <span>Tidak Tersedia</span>
+                        @endif
+                    </td>
                     <td>{{ $movie->created_at->format('d M Y H:i') }}</td>
                     <td>{{ $movie->updated_at->format('d M Y H:i') }}</td>
                     <td>

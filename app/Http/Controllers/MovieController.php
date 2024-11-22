@@ -38,8 +38,10 @@ class MovieController extends Controller
             'genre' => 'required|string|max:100',
             'durasi' => 'required|integer|max:9999',
             'rating' => 'required|numeric|between:0,10',
+            'trailer_url' => 'nullable|url|regex:/^(https:\/\/(www\.)?youtube\.com\/.*)$/', // Validasi URL YouTube
         ]);
 
+        // Proses penyimpanan poster jika ada
         if ($request->hasFile('poster')) {
             $request->validate([
                 'poster' => 'image|mimes:png,jpg,jpeg,gif,svg|max:2048',
@@ -47,17 +49,19 @@ class MovieController extends Controller
 
             $imagePath = $request->file('poster')->store('public');
             $validated['poster'] = $imagePath;
-           }
+        }
 
-           Movie::create([
+        // Penyimpanan data film ke database
+        Movie::create([
             'judul' => $validated['judul'],
             'genre' => $validated['genre'],
             'durasi' => $validated['durasi'],
             'rating' => $validated['rating'],
+            'trailer_url' => $validated['trailer_url'] ?? null,
             'poster' => $validated['poster'] ?? null,
-           ]);
+        ]);
 
-           return redirect()->route('movie.index')->with('success', 'Movie added successfully.');
+        return redirect()->route('movie.index')->with('success', 'Movie added successfully.');
     }
 
     /**
@@ -80,38 +84,43 @@ class MovieController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Movie $movie)
-    {
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'genre' => 'required|string|max:100',
-            'durasi' => 'required|integer|max:9999',
-            'rating' => 'required|numeric|between:0,10',
+{
+    $validated = $request->validate([
+        'judul' => 'required|string|max:255',
+        'genre' => 'required|string|max:100',
+        'durasi' => 'required|integer|max:9999',
+        'rating' => 'required|numeric|between:0,10',
+        'trailer_url' => 'nullable|url|regex:/^(https:\/\/(www\.)?youtube\.com\/.*)$/', // Validasi URL YouTube
+    ]);
+
+    // Proses penyimpanan poster jika ada
+    if ($request->hasFile('poster')) {
+        $request->validate([
+            'poster' => 'image|mimes:png,jpg,jpeg,gif,svg|max:2048',
         ]);
 
-        if ($request->hasFile('poster')) {
-            $request->validate([
-                'poster' => 'image|mimes:png,jpg,jpeg,gif,svg|max:2048',
-            ]);
+        $imagePath = $request->file('poster')->store('public');
 
-            $imagePath = $request->file('poster')->store('public');
+        // Hapus gambar lama jika ada
+        if ($movie->poster) {
+            Storage::delete($movie->poster);
+        }
 
-            if ($movie->poster){
-                Storage::delete($movie->poster);
-            }
-
-            $validated['poster'] = $imagePath;
-           }
-
-           $movie->update([
-            'judul' => $validated['judul'],
-            'genre' => $validated['genre'],
-            'durasi' => $validated['durasi'],
-            'rating' => $validated['rating'],
-            'poster' => $validated['poster'] ?? null,
-           ]);
-
-           return redirect()->route('movie.index')->with('success', 'Movie update successfully.');
+        $validated['poster'] = $imagePath;
     }
+
+    // Update data film di database
+    $movie->update([
+        'judul' => $validated['judul'],
+        'genre' => $validated['genre'],
+        'durasi' => $validated['durasi'],
+        'rating' => $validated['rating'],
+        'trailer_url' => $validated['trailer_url'] ?? null,
+        'poster' => $validated['poster'] ?? null,
+    ]);
+
+    return redirect()->route('movie.index')->with('success', 'Movie updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
