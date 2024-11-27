@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Seat;
 use App\Models\Showtime;
-use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('create');
     }
 
     public function index()
     {
-        $bookings = Booking::with('showtime','seat')->paginate(10);
+        $bookings = Booking::with('showtime', 'seat')->paginate(10);
         return view('bookings.index', compact('bookings'));
     }
 
@@ -25,41 +24,40 @@ class BookingController extends Controller
     {
         $showtimes = Showtime::all();
         $seats = Seat::all();
-        return view('bookings.create', compact('showtimes','seats'));
+        return view('bookings.create', compact('showtimes', 'seats'));
     }
 
     public function store(Request $request)
     {
-        // Validasi data yang diterima dari form
+        // Validate data from the form
         $validated = $request->validate([
             'seat_id' => 'required|exists:seats,id',
             'showtime_id' => 'required|exists:showtimes,id',
             'total_price' => 'required|numeric',
-            'status' => 'required|string',
-            'booking_date' => 'required|date', // Validasi untuk booking_date
+            'booking_date' => 'required|date', // Validation for booking_date
         ]);
 
-        Booking::create($validated);
+        // Create the booking record
+        $booking = Booking::create([
+            'seat_id' => $request->seat_id,
+            'showtime_id' => $request->showtime_id,
+            'total_price' => $request->total_price,
+            'booking_date' => $request->booking_date,
+        ]);
 
-        // Buat pemesanan baru
-        $booking = new Booking();
-        $booking->seat_id = $request->seat_id;
-        $booking->showtime_id = $request->showtime_id;
-        $booking->total_price = $request->total_price;
-        $booking->booking_date = $request->booking_date; // Menggunakan booking_date dari input
-        $booking->save();
-
-        // Update status kursi menjadi 'Booked'
+        // Update the seat status to 'Booked'
         $seat = Seat::find($request->seat_id);
         $seat->status = 'Booked';
         $seat->save();
 
-        return redirect()->route('payment.view', ['booking' => $booking->id])->with('success', 'Booking successful, please proceed with payment.');
+        // Redirect to the payment page with success message
+        return redirect()->route('payment.create', ['bookingId' => $booking->id])
+            ->with('success', 'Booking successful, please proceed with payment.');
     }
 
     public function payment($bookingId)
     {
-        // Logika untuk menampilkan halaman pembayaran
+        // Show the payment page for the booking
         $booking = Booking::findOrFail($bookingId);
         return view('payments.show', compact('booking'));
     }
@@ -73,47 +71,54 @@ class BookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi data yang diterima dari form
+        // Validate the data from the form
         $validated = $request->validate([
             'seat_id' => 'required|exists:seats,id',
             'showtime_id' => 'required|exists:showtimes,id',
             'total_price' => 'required|numeric',
-            'booking_date' => 'required|date', // Validasi untuk booking_date
+            'booking_date' => 'required|date', // Validation for booking_date
         ]);
 
-        Booking::create($validated);
-
-        // Temukan pemesanan berdasarkan ID
+        // Find the booking by ID
         $booking = Booking::findOrFail($id);
 
-        // Update data pemesanan
-        $booking->seat_id = $request->seat_id;
-        $booking->showtime_id = $request->showtime_id;
-        $booking->total_price = $request->total_price;
-        $booking->booking_date = $request->booking_date;
-        $booking->save();
+        // Update the booking data
+        $booking->update([
+            'seat_id' => $request->seat_id,
+            'showtime_id' => $request->showtime_id,
+            'total_price' => $request->total_price,
+            'booking_date' => $request->booking_date,
+        ]);
 
-        // Update status kursi jika kursi yang dipilih berbeda
+        // Update seat status if the seat has changed
         $seat = Seat::find($request->seat_id);
+
         if ($seat->id !== $booking->seat_id) {
-            // Jika kursi yang dipilih berbeda, update status kursi lama
+            // Release the old seat
             $oldSeat = Seat::find($booking->seat_id);
-            $oldSeat->status = 'Available'; // Atau status yang sesuai
+            $oldSeat->status = 'Available';
             $oldSeat->save();
 
-            // Update status kursi baru
+            // Mark the new seat as 'Booked'
             $seat->status = 'Booked';
             $seat->save();
         }
 
-        // Redirect atau kembalikan response
-        return redirect()->route('booking.index')->with('success', 'Booking berhasil diperbarui!');
+        // Redirect back with success message
+        return redirect()->route('booking.index')->with('success', 'Booking updated successfully!');
     }
 
     public function destroy(Booking $booking)
     {
+        // Release the seat before deleting the booking
+        $seat = Seat::find($booking->seat_id);
+        $seat->status = 'Available'; // Mark seat as available again
+        $seat->save();
+
+        // Delete the booking
         $booking->delete();
+
+        // Redirect with success message
         return redirect()->route('booking.index')->with('success', 'Booking deleted successfully!');
     }
-
 }

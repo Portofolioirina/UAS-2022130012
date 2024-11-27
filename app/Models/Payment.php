@@ -16,9 +16,8 @@ class Payment extends Model
         'payment_status',
     ];
 
-    // Definisikan relasi dengan model Booking
     public function booking()
     {
-        return $this->belongsTo(Booking::class, 'booking_id');
+        return $this->belongsTo(Booking::class);
     }
 }

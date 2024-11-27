@@ -120,6 +120,11 @@
                                 <i class="fas fa-chair"></i> Seat
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('payment.index') }}">
+                                <i class="fas fa-money-bill-wave"></i> Payment
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

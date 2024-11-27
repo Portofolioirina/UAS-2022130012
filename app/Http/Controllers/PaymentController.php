@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,15 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('create','show');
+    }
+
     public function index()
     {
-        $payments = Payment::with('booking')->get();
-        return response()->json($payments);
+        $payments = Payment::all();
+        return view('payments.index', compact('payments'));
     }
 
     /**
@@ -21,7 +27,8 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        $bookings = Booking::all();
+        return view('payments.create', compact('bookings'));
     }
 
     /**
@@ -29,7 +36,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'booking_id' => 'required|exists:bookings,id',
             'payment_date' => 'required|date',
             'amount' => 'required|numeric',
@@ -37,8 +44,8 @@ class PaymentController extends Controller
             'payment_status' => 'required|string|max:50',
         ]);
 
-        $payment = Payment::create($request->all());
-        return response()->json($payment, 201);
+        Payment::create($validated);
+        return redirect()->route('payment.index')->with('success', 'Payment added successfully.');
     }
 
     /**
@@ -46,13 +53,12 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        $payment = Payment::with('booking');
-
         if (!$payment) {
-            return response()->json(['message' => 'Payment not found'], 404);
+            // Jika pembayaran tidak ditemukan, redirect atau beri pesan error
+            return redirect()->route('home')->with('error', 'Payment not found.');
         }
-
-        return response()->json($payment);
+        $booking = $payment->booking;
+        return view('payments.show', compact('booking', 'payment'));
     }
 
     /**
