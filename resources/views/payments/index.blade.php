@@ -10,6 +10,7 @@
                 <th>Amount</th>
                 <th>Payment Method</th>
                 <th>Payment Status</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,11 @@
                 <td>{{ $payment->amount }}</td>
                 <td>{{ $payment->payment_method }}</td>
                 <td>{{ $payment->payment_status }}</td>
+                <td>
+                    <a href="{{ route('payment.show', $payment) }}" class="btn btn-primary btn-sm">
+                    Cetak
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
