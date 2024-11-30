@@ -68,4 +68,5 @@ Route::get('/payments', [PaymentController::class, 'index'])->name('payments.ind
 // Rute untuk Menyimpan Booking
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 
+Route::get('/show-payment', [PaymentController::class, 'show'])->name('show.payment');
 

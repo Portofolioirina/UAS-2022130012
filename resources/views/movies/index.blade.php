@@ -68,7 +68,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {!! $movies->links() !!}
+        {{ $movies->links('pagination::bootstrap-5') }}
     </div>
 </div>
 @endsection

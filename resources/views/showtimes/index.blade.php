@@ -56,7 +56,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {!! $showtimes->links() !!}
+        {{ $showtimes->links('pagination::bootstrap-5') }}
     </div>
 </div>
 @endsection

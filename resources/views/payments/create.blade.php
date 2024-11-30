@@ -12,7 +12,10 @@
             <label for="booking_id" class="font-weight-bold">Booking ID</label>
             <select type="text" name="booking_id" class="form-control form-control-lg border-primary" id="booking_id" required placeholder="Masukkan ID booking">
                 @foreach ($bookings as $booking)
-                <option value="{{ $booking->id }}"> {{ $booking->showtime_id }} - {{ $booking->seat_id}}</option>
+                <option value="{{ $booking->id }}"
+                    @if($booking->id == $bookings->last()->id) selected @endif>
+                {{ $booking->id }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -24,7 +27,7 @@
 
         <div class="form-group mb-3">
             <label for="amount" class="font-weight-bold">Total bayar</label>
-            <input type="number" name="amount" class="form-control form-control-lg border-primary" id="amount" required placeholder="Masukkan jumlah pembayaran">
+            <input type="number" name="amount" class="form-control form-control-lg border-primary" id="amount" value="50000" placeholder="Masukkan jumlah pembayaran" readonly>
         </div>
 
         <div class="form-group mb-3">

@@ -39,7 +39,8 @@
         </tbody>
     </table>
 
-    <!-- Pagination jika ada lebih dari satu halaman -->
-    {{ $seats->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $seats->links('pagination::bootstrap-5') }}
+    </div>
 </div>
 @endsection

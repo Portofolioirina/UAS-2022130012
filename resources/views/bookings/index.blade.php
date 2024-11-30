@@ -48,7 +48,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {!! $bookings->links() !!}
+        {{ $bookings->links('pagination::bootstrap-5') }}
     </div>
 </div>
 @endsection
